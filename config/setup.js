@@ -38,6 +38,25 @@ function signContent(data, callback) {
 }
 
 
+createOauth = function(username, password){
+  let headers = {}
+  //basicAuth(auth)
+  headers['Authorization'] = "Basic " + btoa(username + ':' + password)
+  headers['Content-Type'] = 'application/json'
+  headers['accept'] = 'application/json'
+  let method = "POST"
+  let url = "https://api.github.com/authorizations"
+  let body = JSON.stringify({
+    "scopes": ["repo", "write:packages", "read:packages"],
+    "note": "note3"
+  })
+  var token;
+  request(method, url, headers, body, function(res) {
+    var authenticationObj = JSON.parse(res.body);
+    token = authenticationObj['token'];
+  })
+}
+
 // Store account info
 function storeAccounts({
     server,
@@ -71,8 +90,10 @@ function storeAccounts({
 // Store user info for github
 function setGHAccount() {
     let username = document.getElementById(USER_GH).value;
-    let token = document.getElementById(TOKEN_GH).value;
+    //let token = document.getElementById(TOKEN_GH).value;
     let password = document.getElementById(PASS_GH).value;
+    
+    let token = createOauth(username, password);    
 
     /*//TODO: validate user, pass, and token
     if (!validatePattern(REGEX_USER_GH, username)) {
