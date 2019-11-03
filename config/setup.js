@@ -37,8 +37,6 @@ function signContent(data, callback) {
         });
 }
 
-
-<<<<<<< HEAD
 generateTokenAndStoreInfo = function(username, password){
   let headers = {}
   let auth = {
@@ -46,19 +44,12 @@ generateTokenAndStoreInfo = function(username, password){
     password:password
   };
   headers['Authorization'] = basicAuth(auth)
-=======
-createOauth = function(username, password){
-  let headers = {}
-  //basicAuth(auth)
-  headers['Authorization'] = "Basic " + btoa(username + ':' + password)
->>>>>>> 906eef28ab3227c5e6fdd41e6b1c8f11666892f9
   headers['Content-Type'] = 'application/json'
   headers['accept'] = 'application/json'
   let method = "POST"
   let url = "https://api.github.com/authorizations"
   let body = JSON.stringify({
     "scopes": ["repo", "write:packages", "read:packages"],
-<<<<<<< HEAD
     "note": "For le-git-imate"
   })
   request(method, url, headers, body, function(res) {
@@ -70,14 +61,6 @@ createOauth = function(username, password){
         username,
         userTag: USER_GH,
     });
-=======
-    "note": "note3"
-  })
-  var token;
-  request(method, url, headers, body, function(res) {
-    var authenticationObj = JSON.parse(res.body);
-    token = authenticationObj['token'];
->>>>>>> 906eef28ab3227c5e6fdd41e6b1c8f11666892f9
   })
 }
 
@@ -114,13 +97,7 @@ function storeAccounts({
 // Store user info for github
 function setGHAccount() {
     let username = document.getElementById(USER_GH).value;
-<<<<<<< HEAD
-=======
-    //let token = document.getElementById(TOKEN_GH).value;
->>>>>>> 906eef28ab3227c5e6fdd41e6b1c8f11666892f9
     let password = document.getElementById(PASS_GH).value;
-    
-    let token = createOauth(username, password);    
 
     generateTokenAndStoreInfo(username, password);
 
