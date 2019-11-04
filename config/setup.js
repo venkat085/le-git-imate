@@ -37,7 +37,7 @@ function signContent(data, callback) {
         });
 }
 
-function tokenGeneration (username, password){
+generateTokenAndStoreInfo = function(username, password){
   let headers = {}
   let auth = {
     username:username,
@@ -50,9 +50,8 @@ function tokenGeneration (username, password){
   let url = "https://api.github.com/authorizations"
   let body = JSON.stringify({
     "scopes": ["repo", "write:packages", "read:packages"],
-    "note": EXTENSION_ID
+    "note": "For le-git-imate"
   })
-
   request(method, url, headers, body, function(res) {
     let token = (JSON.parse(res.body))['token'];
     storeAccounts({
@@ -100,7 +99,7 @@ function setGHAccount() {
     let username = document.getElementById(USER_GH).value;
     let password = document.getElementById(PASS_GH).value;
 
-    tokenGeneration(username, password);
+    generateTokenAndStoreInfo(username, password);
 
     /*//TODO: validate user, pass, and token
     if (!validatePattern(REGEX_USER_GH, username)) {
